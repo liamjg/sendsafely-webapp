@@ -1,0 +1,68 @@
+.login-modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  width: 100%; /* Full width */
+  height: 100vh; /* Full height */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+  .login-form {
+    padding: 10px;
+    border-radius: 4px;
+    background: white;
+    width: 220px;
+    height: min-content;
+    display: block;
+    position: absolute;
+
+    position: absolute; /*Can also be `fixed`*/
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+    .error-message {
+      width: 100%;
+
+      p {
+        font-size: 15px;
+        margin: 0;
+        color: red;
+      }
+    }
+
+    label {
+      font-size: 15px;
+      width: 100%;
+    }
+
+    input {
+      margin: 5px 0 10px 0;
+      padding: 5px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    button {
+      margin: 10px 0 0 0;
+      padding: 7px 10px;
+      width: 100%;
+      font-size: 15px;
+      border-radius: 2px;
+      border: none;
+
+      background-color: rgb(0, 0, 255); /* Green */
+      color: white;
+      transition-duration: 0.2s;
+    }
+
+    button:hover {
+      background-color: rgb(0, 0, 170); /* Green */
+    }
+
+    button:disabled {
+      background-color: grey; /* Green */
+    }
+  }
+}
