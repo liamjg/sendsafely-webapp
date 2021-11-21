@@ -9,8 +9,8 @@ import { generateAPIKey } from '../../client';
 const LoginForm = ({ setUserData }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,43 +21,48 @@ const LoginForm = ({ setUserData }) => {
 
     setLoading(false);
 
-    if (res.response === RESPONSE_SUCCESS) {
+    if (res?.response === RESPONSE_SUCCESS) {
       setUserData({ apiKey: res.apiKey, apiSecret: res.apiSecret });
-    } else if (res.response === RESPONSE_AUTH_FAILED) {
+    } else if (res?.response === RESPONSE_AUTH_FAILED) {
       setErrorMessage(res.message);
+    } else {
+      setErrorMessage('No response from API');
     }
   };
 
   return (
     <div className='login-modal'>
-      <form className='login-form' onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type={'text'}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type={'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {errorMessage && (
-          <div className='error-message'>
-            <p>{errorMessage}</p>
+      <div className='login-form'>
+        <h3>SendSafely login</h3>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Username:</label>
+            <input
+              type={'text'}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
-        )}
-        <div>
-          <button type='submit' disabled={!password || !username || loading}>
-            {loading ? 'Logging in...' : 'Submit'}
-          </button>
-        </div>
-      </form>
+          <div>
+            <label>Password:</label>
+            <input
+              type={'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          {errorMessage && (
+            <div className='error-message'>
+              <p>{errorMessage}</p>
+            </div>
+          )}
+          <div>
+            <button type='submit' disabled={!password || !username || loading}>
+              {loading ? 'Logging in...' : 'Submit'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
