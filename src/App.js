@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import './app.scss';
 
 import LoginForm from './components/login-form';
-import PackageHistory from './components/package-history';
+import PackageHistoryView from './components/package-history-view';
 
+//TODO: Routing?
 const App = () => {
   const [userData, setUserData] = useState(undefined);
   return (
@@ -12,7 +13,7 @@ const App = () => {
       {!userData ? (
         <LoginForm setUserData={setUserData} />
       ) : (
-        <PackageHistory userData={userData} />
+        <PackageHistoryView userData={userData} />
       )}
     </div>
   );

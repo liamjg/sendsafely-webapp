@@ -1,20 +1,35 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 
-import useIsOnscreen from './is-onscreen-hook';
+import { RESPONSE_SUCCESS, deletePackage } from '../../client';
 
-import {
-  RESPONSE_SUCCESS,
-  deletePackage,
-  getSentPackagesPaginated,
-} from '../../client';
+import useSentPackages from './use-sent-packages';
 
 const DEFAULT_PAGE_SIZE = 5;
 
 const SentPackagesTable = ({ userData }) => {
-  const [packages, setPackages] = useState([]);
   const [actions, setActions] = useState([]);
-  const [hasNextPage, setHasNextPage] = useState(true);
-  const [nextRowIndex, setNextRowIndex] = useState(0);
+
+  const { loading, packages, resetLoader, loadNextRow } = useSentPackages(
+    userData.apiKey,
+    userData.apiSecret,
+    DEFAULT_PAGE_SIZE
+  );
+
+  const observer = useRef();
+
+  const lastPackageElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadNextRow();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, loadNextRow]
+  );
 
   const handleDelete = async (packageId) => {
     const res = await deletePackage(
@@ -22,45 +37,10 @@ const SentPackagesTable = ({ userData }) => {
       userData.apiSecret,
       packageId
     );
-
     if (res.response === RESPONSE_SUCCESS) {
-      setPackages([]);
-      setNextRowIndex(0);
-      setHasNextPage(true);
+      resetLoader();
     }
-
     setActions([...actions, `Delete package ${packageId} [${res.response}]`]);
-  };
-
-  useEffect(() => {
-    getNextPage();
-  }, []);
-
-  const getNextPage = () => {
-    if (hasNextPage) {
-      getPage(nextRowIndex);
-      setNextRowIndex((page) => page + DEFAULT_PAGE_SIZE);
-    }
-  };
-
-  const getPage = async (nextRowIndex) => {
-    const apiKey = userData.apiKey;
-    const apiSecret = userData.apiSecret;
-
-    const res = await getSentPackagesPaginated(
-      apiKey,
-      apiSecret,
-      nextRowIndex,
-      DEFAULT_PAGE_SIZE
-    );
-
-    if (res.pagination.hasOwnProperty('nextRowIndex')) {
-      setHasNextPage(true);
-    } else {
-      setHasNextPage(false);
-    }
-
-    setPackages([...packages, ...res.packages]);
   };
 
   return (
@@ -98,10 +78,8 @@ const SentPackagesTable = ({ userData }) => {
             ))}
         </tbody>
       </table>
-      <div>
-        <button disabled={!hasNextPage} onClick={() => getNextPage()}>
-          Next Page
-        </button>
+      <div ref={lastPackageElementRef} className={'loading-text'}>
+        {loading ? 'Loading...' : `Loaded all packages (${packages.length})`}
       </div>
     </div>
   );
