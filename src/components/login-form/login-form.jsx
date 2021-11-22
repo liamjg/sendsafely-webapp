@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './login-form.scss';
 
@@ -12,6 +12,10 @@ const LoginForm = ({ setUserData }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if ((username || password) && errorMessage) setErrorMessage('');
+  }, [username, password, errorMessage]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,6 +24,8 @@ const LoginForm = ({ setUserData }) => {
     const res = await generateAPIKey(username, password);
 
     setLoading(false);
+    setUsername('');
+    setPassword('');
 
     if (res?.response === RESPONSE_SUCCESS) {
       setUserData({
@@ -35,7 +41,8 @@ const LoginForm = ({ setUserData }) => {
   };
 
   return (
-    <div className='login-modal'>
+    <>
+      <div className='login-background' />
       <div className='login-form'>
         <h3>SendSafely login</h3>
         <form onSubmit={handleSubmit}>
@@ -67,7 +74,7 @@ const LoginForm = ({ setUserData }) => {
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-
-import './app.scss';
+import React from 'react';
 
 import LoginForm from './components/login-form';
 import PackageHistoryView from './components/package-history-view';
+import useSessionStorage from './use-session-storage';
 
 const App = () => {
-  const [userData, setUserData] = useState(undefined);
+  const [userData, setUserData] = useSessionStorage('user', null);
 
-  return (
-    <div className='main-content'>
-      {!userData ? (
-        <LoginForm setUserData={setUserData} />
-      ) : (
-        <PackageHistoryView userData={userData} setUserData={setUserData} />
-      )}
-    </div>
-  );
+  if (!userData) {
+    return <LoginForm setUserData={setUserData} />;
+  }
+  return <PackageHistoryView userData={userData} setUserData={setUserData} />;
 };
 
 export default App;

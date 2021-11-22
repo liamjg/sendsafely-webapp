@@ -1,26 +1,18 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getSentPackagesPaginated } from '../../../client';
 
-const useSentPackages = (apiKey, apiSecret, pageSize, observerRef) => {
+const useSentPackages = (apiKey, apiSecret, pageSize) => {
   const [loading, setLoading] = useState(true);
   const [packages, setPackages] = useState([]);
   const [hasMore, setHasMore] = useState(false);
   const [nextRowIndex, setNextRowIndex] = useState(0);
 
-  const triggerRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observerRef.current) observerRef.current.disconnect();
-      observerRef.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setNextRowIndex((lastRowIndex) => lastRowIndex + pageSize);
-        }
-      });
-      if (node) observerRef.current.observe(node);
-    },
-    [loading, pageSize, hasMore, observerRef]
-  );
+  const loadNextRow = () => {
+    if (hasMore) {
+      setNextRowIndex((lastRowIndex) => lastRowIndex + pageSize);
+    }
+  };
 
   const resetLoader = () => {
     setLoading(true);
@@ -42,7 +34,7 @@ const useSentPackages = (apiKey, apiSecret, pageSize, observerRef) => {
     );
   }, [apiKey, apiSecret, pageSize, nextRowIndex]);
 
-  return { loading, packages, resetLoader, triggerRef };
+  return { loading, packages, resetLoader, loadNextRow };
 };
 
 export default useSentPackages;

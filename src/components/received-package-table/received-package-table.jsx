@@ -2,6 +2,8 @@ import React, { useCallback, useRef } from 'react';
 
 import useReceveivedPackages from './use-received-packages';
 
+import './received-package-table.scss';
+
 const DEFAULT_PAGE_SIZE = 5;
 
 const ReceivedPackagesTable = ({ userData }) => {
@@ -28,8 +30,8 @@ const ReceivedPackagesTable = ({ userData }) => {
   );
 
   return (
-    <div className='package-table'>
-      <h2>Packages received:</h2>
+    <div className='received-package-table'>
+      <h2>Packages received</h2>
       <table>
         <thead>
           <tr>

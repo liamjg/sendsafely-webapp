@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 import { RESPONSE_SUCCESS, deletePackage } from '../../../client';
 
 import useSentPackages from './use-sent-packages';
+
+import './sent-package-table.scss';
 
 const DEFAULT_PAGE_SIZE = 5;
 
@@ -11,11 +13,24 @@ const SentPackagesTable = ({ userData }) => {
 
   const observer = useRef();
 
-  const { loading, packages, resetLoader, triggerRef } = useSentPackages(
+  const { loading, packages, resetLoader, loadNextRow } = useSentPackages(
     userData.apiKey,
     userData.apiSecret,
-    DEFAULT_PAGE_SIZE,
-    observer
+    DEFAULT_PAGE_SIZE
+  );
+
+  const lastPackageElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadNextRow();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, loadNextRow]
   );
 
   const handleDelete = async (packageId) => {
@@ -31,8 +46,8 @@ const SentPackagesTable = ({ userData }) => {
   };
 
   return (
-    <div className='package-table'>
-      <h2>Packages sent:</h2>
+    <div className='sent-package-table'>
+      <h2>Packages sent</h2>
       <ul>
         {actions.map((action) => (
           <li>{action}</li>
@@ -65,7 +80,7 @@ const SentPackagesTable = ({ userData }) => {
             ))}
         </tbody>
       </table>
-      <div ref={triggerRef} className={'loading-text'}>
+      <div ref={lastPackageElementRef} className={'loading-text'}>
         {loading ? 'Loading...' : `Loaded all packages (${packages.length})`}
       </div>
     </div>

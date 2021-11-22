@@ -1,124 +1,76 @@
-.login-modal {
-  display: block; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  width: 100%; /* Full width */
-  height: 100vh; /* Full height */
+.login-background {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+}
 
-  //source: https://projects.verou.me/css3patterns/#
-  background-color: #556;
-  background-image: linear-gradient(
-      30deg,
-      #445 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #445 87.5%,
-      #445
-    ),
-    linear-gradient(
-      150deg,
-      #445 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #445 87.5%,
-      #445
-    ),
-    linear-gradient(
-      30deg,
-      #445 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #445 87.5%,
-      #445
-    ),
-    linear-gradient(
-      150deg,
-      #445 12%,
-      transparent 12.5%,
-      transparent 87%,
-      #445 87.5%,
-      #445
-    ),
-    linear-gradient(
-      60deg,
-      #99a 25%,
-      transparent 25.5%,
-      transparent 75%,
-      #99a 75%,
-      #99a
-    ),
-    linear-gradient(
-      60deg,
-      #99a 25%,
-      transparent 25.5%,
-      transparent 75%,
-      #99a 75%,
-      #99a
-    );
-  background-size: 80px 140px;
-  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+.login-form {
+  z-index: 2;
 
-  .login-form {
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid gray;
-    background: WhiteSmoke;
+  padding: 16px;
+  background: white;
 
-    width: 220px;
-    height: min-content;
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+  width: 220px;
+  height: min-content;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 
-    h3 {
-      margin: 0px 0px 8px;
-    }
+  h3 {
+    margin: 0px 0px 8px;
+  }
 
-    .error-message {
-      width: 100%;
+  .error-message {
+    width: 100%;
 
-      p {
-        font-size: 15px;
-        margin: 0;
-        color: red;
-      }
-    }
-
-    label {
+    p {
       font-size: 15px;
-      width: 100%;
+      margin: 0;
+      color: red;
     }
+  }
 
-    input {
-      margin: 5px 0 10px 0;
-      padding: 5px;
-      box-sizing: border-box;
-      width: 100%;
-    }
+  label {
+    font-size: 15px;
+    width: 100%;
+  }
 
-    button {
-      margin: 10px 0 0 0;
-      padding: 7px 10px;
-      width: 100%;
-      font-size: 15px;
-      border-radius: 2px;
-      border: none;
+  input {
+    margin: 5px 0 10px 0;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 0px;
+    border: 1px solid grey;
+  }
 
-      background-color: rgb(0, 0, 255);
-      color: white;
-      transition-duration: 0.2s;
-    }
+  button {
+    margin: 10px 0 0 0;
+    padding: 7px 10px;
+    width: 100%;
+    font-size: 15px;
+    // border-radius: 2px;
+    border: none;
 
-    button:hover {
-      background-color: rgb(0, 0, 170);
-    }
+    background-color: seagreen;
 
-    button:disabled {
-      background-color: grey;
-    }
+    color: white;
+    transition-duration: 0.2s;
+  }
+
+  button:hover {
+    background-color: #20613d;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    background-color: grey;
   }
 }

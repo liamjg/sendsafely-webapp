@@ -7,19 +7,17 @@ const useReceivedPackages = (apiKey, apiSecret, pageSize) => {
   const [packages, setPackages] = useState([]);
   const [hasMore, setHasMore] = useState(false);
   const [nextRowIndex, setNextRowIndex] = useState(0);
-  const [loadRowIndex, setLoadRowIndex] = useState(0);
 
   const resetLoader = () => {
     setLoading(true);
     setPackages([]);
     setHasMore(false);
     setNextRowIndex(0);
-    setLoadRowIndex(0);
   };
 
   const loadNextRow = () => {
     if (hasMore) {
-      setLoadRowIndex(nextRowIndex);
+      setNextRowIndex((lastRowIndex) => lastRowIndex + pageSize);
     }
   };
 
@@ -29,21 +27,14 @@ const useReceivedPackages = (apiKey, apiSecret, pageSize) => {
     getReceivedPackagesPaginated(
       apiKey,
       apiSecret,
-      loadRowIndex,
+      nextRowIndex,
       pageSize
     ).then((res) => {
-      setPackages((prevPackages) => [
-        ...new Set([...prevPackages, ...res.packages]),
-      ]);
-      if (res.pagination.hasOwnProperty('nextRowIndex')) {
-        setHasMore(true);
-        setNextRowIndex(res.pagination.nextRowIndex);
-      } else {
-        setHasMore(false);
-      }
+      setPackages((prevPackages) => [...prevPackages, ...res.packages]);
+      setHasMore(res.pagination.hasOwnProperty('nextRowIndex'));
       setLoading(false);
     });
-  }, [apiKey, apiSecret, pageSize, loadRowIndex]);
+  }, [apiKey, apiSecret, pageSize, nextRowIndex]);
 
   return { loading, packages, resetLoader, loadNextRow };
 };
