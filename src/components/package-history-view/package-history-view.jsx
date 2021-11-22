@@ -2,8 +2,8 @@ import React from 'react';
 
 import './package-history-view.scss';
 
-import SentPackagesTable from './sent-package-table';
-import ReceivedPackagesTable from './received-package-table/';
+import SentPackagesTable from '../sent-package-table';
+import ReceivedPackagesTable from '../received-package-table/';
 
 const PackageHistoryView = ({ userData, setUserData }) => (
   <div className='package-view'>

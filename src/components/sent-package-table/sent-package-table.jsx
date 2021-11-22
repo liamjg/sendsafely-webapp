@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 
-import { RESPONSE_SUCCESS, deletePackage } from '../../../client';
+import { RESPONSE_SUCCESS, deletePackage } from '../../client';
 
 import useSentPackages from './use-sent-packages';
 
@@ -33,16 +33,24 @@ const SentPackagesTable = ({ userData }) => {
     [loading, loadNextRow]
   );
 
-  const handleDelete = async (packageId) => {
+  const handleDelete = async (pkg) => {
     const res = await deletePackage(
       userData.apiKey,
       userData.apiSecret,
-      packageId
+      pkg.packageId
     );
     if (res.response === RESPONSE_SUCCESS) {
       resetLoader();
+      setActions([
+        ...actions,
+        `Sucessfully deleted package dated ${pkg.packageUpdateTimestamp}`,
+      ]);
+    } else {
+      setActions([
+        ...actions,
+        `Failed to delete package dated ${pkg.packageUpdateTimestamp}: ${res.message}`,
+      ]);
     }
-    setActions([...actions, `Delete package ${packageId} [${res.response}]`]);
   };
 
   return (
@@ -72,9 +80,7 @@ const SentPackagesTable = ({ userData }) => {
                 <td>{pkg.recipients.map((recipient) => `${recipient}\n`)}</td>
                 <td>{pkg.filenames.map((filename) => `${filename}\n`)}</td>
                 <td>
-                  <button onClick={() => handleDelete(pkg.packageId)}>
-                    Delete
-                  </button>
+                  <button onClick={() => handleDelete(pkg)}>Delete</button>
                 </td>
               </tr>
             ))}

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import LoginForm from './components/login-form';
 import PackageHistoryView from './components/package-history-view';
-import useSessionStorage from './use-session-storage';
 
 const App = () => {
-  const [userData, setUserData] = useSessionStorage('user', null);
+  const [userData, setUserData] = useState(null);
 
   if (!userData) {
     return <LoginForm setUserData={setUserData} />;
