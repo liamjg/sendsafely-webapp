@@ -1,52 +1,81 @@
-.package-history-view {
+.package-view {
   width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
   display: flex;
+  flex-direction: column;
 
-  .package-panel {
-    height: 100vh;
+  .package-view-title > * {
+    display: block;
+    margin: 0px;
+  }
+
+  .package-view-header {
     display: flex;
-    overflow: scroll;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    height: 31px;
+    border-bottom: 1px solid black;
+    background-color: gainsboro;
+  }
 
-    flex-basis: 50%;
-    flex-grow: 0;
+  .package-view-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    height: calc(100vh - 64px);
 
-    .package-table {
-      width: 100%;
-      padding: 16px;
+    .package-panel + .package-panel {
+      border-left: 1px solid black;
+    }
 
-      ul {
-        list-style-type: disc;
-        li {
-          font-size: 14px;
-        }
-      }
+    .package-panel {
+      display: flex;
+      overflow: scroll;
+      justify-content: center;
 
-      table {
-        border-collapse: collapse;
+      flex-basis: 50%;
+      flex-grow: 0;
+
+      .package-table {
         width: 100%;
+        padding: 16px;
 
-        th,
-        td {
-          border: 1px solid black;
-          padding: 4px;
-          font-size: 12px;
+        ul {
+          list-style-type: disc;
+          li {
+            font-size: 14px;
+          }
         }
 
-        td:last-child {
-          width: 72px;
-          text-align: center;
+        table {
+          border-collapse: collapse;
+          width: 100%;
+
+          th,
+          td {
+            border: 1px solid black;
+            padding: 4px;
+            font-size: 12px;
+          }
+
+          td:last-child {
+            width: 72px;
+            text-align: center;
+          }
+
+          td {
+            white-space: pre;
+          }
         }
 
-        td {
-          white-space: pre;
+        .loading-text {
+          font-size: 14px;
+          font-weight: lighter;
         }
-      }
-
-      .loading-text {
-        // font-style: italic;
-        font-size: 14px;
-        font-weight: lighter;
       }
     }
   }

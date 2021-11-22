@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { getSentPackagesPaginated } from '../../client';
+import { getReceivedPackagesPaginated } from '../../../client';
 
-const useSentPackages = (apiKey, apiSecret, pageSize) => {
+const useReceivedPackages = (apiKey, apiSecret, pageSize) => {
   const [loading, setLoading] = useState(true);
   const [packages, setPackages] = useState([]);
   const [hasMore, setHasMore] = useState(false);
@@ -26,24 +26,26 @@ const useSentPackages = (apiKey, apiSecret, pageSize) => {
   useEffect(() => {
     setLoading(true);
 
-    getSentPackagesPaginated(apiKey, apiSecret, loadRowIndex, pageSize).then(
-      (res) => {
-        setPackages((prevPackages) => [
-          ...new Set([...prevPackages, ...res.packages]),
-        ]);
-
-        if (res.pagination.hasOwnProperty('nextRowIndex')) {
-          setHasMore(true);
-          setNextRowIndex(res.pagination.nextRowIndex);
-        } else {
-          setHasMore(false);
-        }
-        setLoading(false);
+    getReceivedPackagesPaginated(
+      apiKey,
+      apiSecret,
+      loadRowIndex,
+      pageSize
+    ).then((res) => {
+      setPackages((prevPackages) => [
+        ...new Set([...prevPackages, ...res.packages]),
+      ]);
+      if (res.pagination.hasOwnProperty('nextRowIndex')) {
+        setHasMore(true);
+        setNextRowIndex(res.pagination.nextRowIndex);
+      } else {
+        setHasMore(false);
       }
-    );
+      setLoading(false);
+    });
   }, [apiKey, apiSecret, pageSize, loadRowIndex]);
 
   return { loading, packages, resetLoader, loadNextRow };
 };
 
-export default useSentPackages;
+export default useReceivedPackages;

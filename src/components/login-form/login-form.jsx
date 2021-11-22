@@ -22,7 +22,11 @@ const LoginForm = ({ setUserData }) => {
     setLoading(false);
 
     if (res?.response === RESPONSE_SUCCESS) {
-      setUserData({ apiKey: res.apiKey, apiSecret: res.apiSecret });
+      setUserData({
+        apiKey: res.apiKey,
+        apiSecret: res.apiSecret,
+        email: res.email,
+      });
     } else if (res?.response === RESPONSE_AUTH_FAILED) {
       setErrorMessage(res.message);
     } else {
