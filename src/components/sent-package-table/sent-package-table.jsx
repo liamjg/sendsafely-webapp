@@ -13,14 +13,14 @@ const DEFAULT_PAGE_SIZE = 5;
 const SentPackagesTable = ({ userData }) => {
   const [actions, setActions] = useState([]);
 
-  const observer = useRef();
-
   const { loading, packages, resetLoader, loadNextRow } = usePackages(
     userData.apiKey,
     userData.apiSecret,
     DEFAULT_PAGE_SIZE,
     getSentPackagesPaginated
   );
+
+  const observer = useRef();
 
   const lastPackageElementRef = useCallback(
     (node) => {
