@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './login-form.scss';
 
@@ -6,15 +6,19 @@ import { RESPONSE_SUCCESS, RESPONSE_AUTH_FAILED } from '../../utilities/client';
 
 import { generateAPIKey } from '../../utilities/client';
 
-const LoginForm = ({ setUserData }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+import useLoginForm from '../../hooks/use-login-form';
 
-  useEffect(() => {
-    if ((username || password) && errorMessage) setErrorMessage('');
-  }, [username, password, errorMessage]);
+const LoginForm = ({ setUserData }) => {
+  const {
+    username,
+    password,
+    errorMessage,
+    loading,
+    setUsername,
+    setPassword,
+    setErrorMessage,
+    setLoading,
+  } = useLoginForm();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +48,7 @@ const LoginForm = ({ setUserData }) => {
     <>
       <div className='login-background' />
       <div className='login-form'>
-        <h3>SendSafely login</h3>
+        <h3>SendSafely package browser login</h3>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Username:</label>

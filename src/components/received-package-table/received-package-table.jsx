@@ -1,16 +1,19 @@
 import React, { useCallback, useRef } from 'react';
 
-import useReceveivedPackages from './use-received-packages';
+import usePackages from '../../hooks/use-packages';
+
+import { getReceivedPackagesPaginated } from '../../utilities/client';
 
 import './received-package-table.scss';
 
 const DEFAULT_PAGE_SIZE = 5;
 
 const ReceivedPackagesTable = ({ userData }) => {
-  const { loading, packages, loadNextRow } = useReceveivedPackages(
+  const { loading, packages, loadNextRow } = usePackages(
     userData.apiKey,
     userData.apiSecret,
-    DEFAULT_PAGE_SIZE
+    DEFAULT_PAGE_SIZE,
+    getReceivedPackagesPaginated
   );
 
   const observer = useRef();

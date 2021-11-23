@@ -2,7 +2,9 @@ import React, { useState, useCallback, useRef } from 'react';
 
 import { RESPONSE_SUCCESS, deletePackage } from '../../utilities/client';
 
-import useSentPackages from './use-sent-packages';
+import usePackages from '../../hooks/use-packages';
+
+import { getSentPackagesPaginated } from '../../utilities/client';
 
 import './sent-package-table.scss';
 
@@ -13,10 +15,11 @@ const SentPackagesTable = ({ userData }) => {
 
   const observer = useRef();
 
-  const { loading, packages, resetLoader, loadNextRow } = useSentPackages(
+  const { loading, packages, resetLoader, loadNextRow } = usePackages(
     userData.apiKey,
     userData.apiSecret,
-    DEFAULT_PAGE_SIZE
+    DEFAULT_PAGE_SIZE,
+    getSentPackagesPaginated
   );
 
   const lastPackageElementRef = useCallback(
