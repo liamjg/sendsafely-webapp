@@ -23,8 +23,8 @@ const usePackages = (apiKey, apiSecret, pageSize, getPackagesPromise) => {
 
   useEffect(() => {
     setLoading(true);
-    getPackagesPromise(apiKey, apiSecret, nextRowIndex, pageSize).then(
-      (res) => {
+    getPackagesPromise(apiKey, apiSecret, nextRowIndex, pageSize)
+      .then((res) => {
         if (res?.response === RESPONSE_SUCCESS) {
           setPackages((prevPackages) => [...prevPackages, ...res.packages]);
           setHasMore(res.pagination.hasOwnProperty('nextRowIndex'));
@@ -32,9 +32,13 @@ const usePackages = (apiKey, apiSecret, pageSize, getPackagesPromise) => {
           setPackages([]);
           setHasMore(false);
         }
-        setLoading(false);
-      }
-    );
+      })
+      .catch((error) => {
+        console.log(error);
+        setPackages([]);
+        setHasMore(false);
+      });
+    setLoading(false);
   }, [apiKey, apiSecret, pageSize, getPackagesPromise, nextRowIndex]);
 
   return { loading, packages, resetLoader, loadNextRow };

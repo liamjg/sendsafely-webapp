@@ -8,6 +8,8 @@ import { generateAPIKey } from '../../utilities/client';
 
 import useLoginForm from '../../hooks/use-login-form';
 
+// TODO: add pre-api call input validation
+// TODO: decouple client
 const LoginForm = ({ setUserData }) => {
   const {
     username,
