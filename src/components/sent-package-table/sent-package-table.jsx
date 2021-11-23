@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 
-import { RESPONSE_SUCCESS, deletePackage } from '../../client';
+import { RESPONSE_SUCCESS, deletePackage } from '../../utilities/client';
 
 import useSentPackages from './use-sent-packages';
 

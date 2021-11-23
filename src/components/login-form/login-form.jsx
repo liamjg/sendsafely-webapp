@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import './login-form.scss';
 
-import { RESPONSE_SUCCESS, RESPONSE_AUTH_FAILED } from '../../client';
+import { RESPONSE_SUCCESS, RESPONSE_AUTH_FAILED } from '../../utilities/client';
 
-import { generateAPIKey } from '../../client';
+import { generateAPIKey } from '../../utilities/client';
 
 const LoginForm = ({ setUserData }) => {
   const [username, setUsername] = useState('');

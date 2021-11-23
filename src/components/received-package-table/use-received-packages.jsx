@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getReceivedPackagesPaginated } from '../../client';
+import { getReceivedPackagesPaginated } from '../../utilities/client';
 
 const useReceivedPackages = (apiKey, apiSecret, pageSize) => {
   const [loading, setLoading] = useState(true);
