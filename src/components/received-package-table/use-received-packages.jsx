@@ -21,6 +21,7 @@ const useReceivedPackages = (apiKey, apiSecret, pageSize) => {
     }
   };
 
+  //TODO: add error handling
   useEffect(() => {
     setLoading(true);
 

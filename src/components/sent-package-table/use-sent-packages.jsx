@@ -21,7 +21,7 @@ const useSentPackages = (apiKey, apiSecret, pageSize) => {
     setNextRowIndex(0);
   };
 
-  // wait for changes to nextRowIndex
+  //TODO: add error handling
   useEffect(() => {
     setLoading(true);
 
