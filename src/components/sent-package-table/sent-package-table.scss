@@ -50,6 +50,11 @@
       border: 1px solid red;
     }
 
+    button:disabled {
+      color: grey;
+      border: 1px solid grey;
+    }
+
     td {
       white-space: pre;
     }

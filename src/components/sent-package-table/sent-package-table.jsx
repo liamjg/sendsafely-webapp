@@ -12,6 +12,7 @@ const DEFAULT_PAGE_SIZE = 5;
 
 const SentPackagesTable = ({ userData }) => {
   const [actions, setActions] = useState([]);
+  const [disableButtons, setDisableButtons] = useState(false);
 
   const { loading, packages, resetLoader, loadNextRow } = usePackages(
     userData.apiKey,
@@ -37,6 +38,7 @@ const SentPackagesTable = ({ userData }) => {
   );
 
   const handleDelete = async (pkg) => {
+    setDisableButtons(true);
     const res = await deletePackage(
       userData.apiKey,
       userData.apiSecret,
@@ -54,6 +56,7 @@ const SentPackagesTable = ({ userData }) => {
         `Failed to delete package dated ${pkg.packageUpdateTimestamp}: ${res.message}`,
       ]);
     }
+    setDisableButtons(false);
   };
 
   return (
@@ -83,7 +86,12 @@ const SentPackagesTable = ({ userData }) => {
                 <td>{pkg.recipients.map((recipient) => `${recipient}\n`)}</td>
                 <td>{pkg.filenames.map((filename) => `${filename}\n`)}</td>
                 <td>
-                  <button onClick={() => handleDelete(pkg)}>Delete</button>
+                  <button
+                    onClick={() => handleDelete(pkg)}
+                    disabled={disableButtons}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
