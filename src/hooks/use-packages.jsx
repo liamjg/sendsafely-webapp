@@ -35,7 +35,7 @@ const usePackages = (apiKey, apiSecret, pageSize, getPackagesPromise) => {
         setLoading(false);
       }
     );
-  }, [apiKey, apiSecret, pageSize, nextRowIndex, getPackagesPromise]);
+  }, [apiKey, apiSecret, pageSize, getPackagesPromise, nextRowIndex]);
 
   return { loading, packages, resetLoader, loadNextRow };
 };

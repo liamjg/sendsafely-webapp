@@ -6,6 +6,7 @@ const useLoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // clear the error message if input is changed
   useEffect(() => {
     if ((username || password) && errorMessage) setErrorMessage('');
   }, [username, password, errorMessage]);
